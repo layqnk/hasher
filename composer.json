@@ -1,0 +1,9 @@
+{
+    "name": "layqnk/hasher",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "include/"
+        }
+    }
+}
