@@ -1,0 +1,4 @@
+1. polskagola = af7c713b55cd84a176bdc175b9d53c77. Wariant: md5
+2. polskagola = 6fcc92e7e09d343d4756182cf41f983639e76048. Wariant: sha1
+3. polskagola = 087eda852968cd4ec72d5455adf1f741fdc79fef. Wariant: sha1md5
+4. polskagola = 0d5483527e2836f99da740e6a71519c75669608864e442c0a077dbce4a184d87. Wariant: sha256

@@ -31,20 +31,23 @@ include __DIR__ . '/template/header.html';
     switch ($action){
         case 'hash':
             $password = $_POST['password'];
-            $generator = new HashGenerator($password);
+            $variant = $_POST['variant'];
+            $generator = new HashGenerator($password, $variant);
             $hash = $generator->getHash(); // metoda zwracająca hash
-            $generator->tosession();
+            $generator->tosession();    //zapis do sesji
             $nGetter = new GetNumber("hashes.txt");
             $n = $nGetter->get() + 1;
             echo "<a href='index.php?action=save&n=$n'>Zapisz hasz</a>";
+            echo "<br /><a href='index.php'>Wróć</a>";
             $_SESSION['n'] = $n;
         break;
         case 'save':
             $password = $_SESSION['password'];
             $hash = $_SESSION['hash'];
             $n = $_SESSION['n'];
+            $variant = $_SESSION['variant'] ?? 'sha1md5';
             $saver = new SaveHash("hashes.txt");
-            $saver->save($n, $password, $hash);
+            $saver->save($n, $password, $hash, $variant);
             $_SESSION['n'] = $n + 1;
             echo "Zapisano hasło i jego hash do pliku. <a href='index.php?action=viewfile'>Zobacz plik</a>";
         break;
@@ -58,18 +61,22 @@ include __DIR__ . '/template/header.html';
             echo $viewer->show();
         break;
         case 'cleanfile':
-        if (isset($_POST['adminpassword'])) {
+        if (isset($_POST['adminpassword'])) 
+        {
             $cleaner = new CleanFile("hashes.txt");
-            if (!$cleaner->checkpassword($_POST['adminpassword'])) {
+            if (!$cleaner->checkpassword($_POST['adminpassword'])) 
+            {
                 echo "Podano błędne hasło. <a href='javascript:history.back();'>Powrót</a>";
             } 
             else
             {    
-            $cleaner = new CleanFile("hashes.txt");
-            $cleaner->clean();
-            echo "Plik został wyczyszczony. <a href='index.php'>Wróć</a>";
+                $cleaner = new CleanFile("hashes.txt");
+                $cleaner->clean();
+                echo "Plik został wyczyszczony. <a href='index.php'>Wróć</a>";
             }
-        } else {
+        } 
+        else 
+        {
             $cleaner = new CleanFile("hashes.txt");
             echo $cleaner->getAdminPassword();
         }
