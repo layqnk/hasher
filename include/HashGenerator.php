@@ -1,5 +1,6 @@
 <?php
 namespace App;
+use Exception;
 class HashGenerator
 {
     private string $password;
@@ -30,10 +31,19 @@ class HashGenerator
             case 'sha256':
                 $this->hash = hash('sha256', $this->password);
                 break;
+            case 'sha512':
+                $this->hash = hash('sha512', $this->password);
+                break;
+            case 'password_hash-bcrypt':
+                $this->hash = password_hash($this->password, PASSWORD_BCRYPT);
+                break;
+            case 'password_hash':
+                $this->hash = password_hash($this->password, PASSWORD_DEFAULT);
+                break;
             case 'sha1md5':
-            default:
                 $this->hash = sha1(md5($this->password));
-                $this->variant = 'sha1md5';
+            default:
+                $this->hash = new Exception("Niepoprawny wariant haszowania");
                 break;
         }
         echo "Hasz dla hasła " . $this->password . " to: " . $this->hash;

@@ -57,7 +57,7 @@ include __DIR__ . '/template/header.html';
             echo $form->render();
         break;
         case 'viewfile':
-            $viewer = new \App\ViewFile("hashes.txt");
+            $viewer = new ViewFile("hashes.txt");
             echo $viewer->show();
         break;
         case 'cleanfile':
